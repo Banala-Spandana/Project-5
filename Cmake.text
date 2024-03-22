@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 3.5)
+project(ros2_cpp_example)
+
+# Find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+
+# Add executable
+add_executable(publisher_node src/publisher.cpp)
+ament_target_dependencies(publisher_node rclcpp std_msgs)
+
+add_executable(subscriber_node src/subscriber.cpp)
+ament_target_dependencies(subscriber_node rclcpp std_msgs)
+
+# Install executable
+install(TARGETS
+  publisher_node
+  subscriber_node
+  DESTINATION lib/${PROJECT_NAME})
+
+# Install launch file
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME})
+
+# Install package.xml
+install(FILES
+  package.xml
+  DESTINATION share/${PROJECT_NAME})
+
+ament_package()
